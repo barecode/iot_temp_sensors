@@ -1,4 +1,4 @@
-# Basic script to toggle the LED state on pin 4
+# Basic script to toggle the LED state on GPIO pin 7
 # For Raspberry Pi pin mapping, see:
 # https://www.raspberrypi.org/documentation/usage/gpio/README.md
 #
@@ -10,7 +10,7 @@ from gpiozero import LED
 from time import sleep
 
 flag = True
-led = LED(4)
+led = LED(7)
 while True:
     if flag:
         print("on");
