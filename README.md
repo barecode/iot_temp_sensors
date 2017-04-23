@@ -19,6 +19,8 @@ Select `5 Interfacing options`
 Select `P2 enable SSH`
 3. Install your favorite editor (if not already provided)
 `sudo apt-get install vim`
+4. Configure your pi with 1-wire GPIO support
+`sudo ./configure_w1_pi.sh`
 
 # Ready to hack
 
