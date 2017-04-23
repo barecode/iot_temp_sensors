@@ -15,12 +15,12 @@ Required Hardware
 1. Install Raspbian via NOOBS, just take the defaults, you can hack on it later
 2. Enable SSH by default so you can SSH in and do the work
 `sudo raspi-config`
-Select `5 Interfacing options`
-Select `P2 enable SSH`
+  * Select `5 Interfacing options`
+  * Select `P2 enable SSH`
 3. Install your favorite editor (if not already provided)
-`sudo apt-get install vim`
+  * `sudo apt-get install vim`
 4. Configure your pi with 1-wire GPIO support
-`sudo ./configure_w1_pi.sh`
+  * `sudo ./configure_w1_pi.sh`
 
 # Ready to hack
 
