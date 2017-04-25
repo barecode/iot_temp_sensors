@@ -4,9 +4,13 @@ IoT temperature sensor network used to monitor the heat in my attic
 # Getting Started
 
 Required Hardware
-* Raspberry pi (I am using Raspberry Pi 1 Model B, I'd recommend a newer version)
-* DS18B20 Thermal sensor (easily ordered online from a variety of retailers)
+* [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi#Model_B)
+  * I am using Raspberry Pi version 1 Model B. I'd recommend a newer version
+* DS18B20 Thermal sensor, easily ordered online from a variety of retailers
+  * I ordered mine through eBay
+  * https://www.adafruit.com/product/381
 * A breadboard (for easy connecting) 
+  * I already had one from an Arduino kit I own
 * Single LED
 * Jumper cables (purchased or home-made from 22 AWG)
 
@@ -20,7 +24,7 @@ Required Hardware
   * Select `5 Interfacing options`
   * Select `P2 enable SSH`
 3. Change the default password! The default password is 'raspberry', so change the password to something better
-4. Install your favorite editor (if not already provided)
+4. [Install your favorite editor (if not already provided)[(https://www.raspberrypi.org/documentation/linux/usage/text-editors.md)
   * `sudo apt-get install vim`
 5. Configure your pi to boot with 1-wire GPIO support
   * `sudo ./configure_w1_pi.sh`
