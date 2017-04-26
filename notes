@@ -1,0 +1,36 @@
+Catalog -> iot platform -> name + initials
+Overview, wait for green, create cloudant database
+Launch to get into admin console for cloudant
+disks -> new database -> raspi3monitor
+Design Docs -> Query Indexes { "ts": "asc" } (replaces foo) -> Create
+
+GetCloudant URL from connections
+
+https://35694ce9-b1b3-4f5b-abfb-0891b3a40076-bluemix:a11e7258a9ef8d46fdfd4bcff80664bf472c2e9dee3cda18bdbf355aa1a2bca2@35694ce9-b1b3-4f5b-abfb-0891b3a40076-bluemix.cloudant.com
+
+Watson IOT services
+Devices -> Add Device -> Create Device Type -> create Device type
+name = raspi3monitor
+Nexts
+Add Device -> mct1001 -> auto gen token ->
+
+Organization ID oengiu
+Device Type raspi3monitor
+Device ID mct1001
+Authentication Method token
+Authentication Token 
+
+Go to app URL, NodeRed editor, paste template, update database and gmail
+dd Graph flow, import Graph
+Update http request w/ Cloudant URL
+
+
+Set runtime environment variables NODE_RED_USERNAME and NODE_RED_PASSWORD to secure node red
+
+
+pm2 start raspi3monitor.js
+pm2 status
+pm2 logs raspi3monitor
+
+https://temp-sensor-mct.mybluemix.net/graphdata
+  
