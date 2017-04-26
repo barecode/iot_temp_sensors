@@ -1,3 +1,6 @@
+# Secure credentials sourced in scripts
+secure.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
