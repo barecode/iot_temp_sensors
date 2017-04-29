@@ -1,0 +1,18 @@
+POST https://35694ce9-b1b3-4f5b-abfb-0891b3a40076-bluemix:a11e7258a9ef8d46fdfd4bcff80664bf472c2e9dee3cda18bdbf355aa1a2bca2@35694ce9-b1b3-4f5b-abfb-0891b3a40076-bluemix.cloudant.com/raspi3monitor_multi/_find
+{
+  "limit": 10,
+  "selector": {
+    "ts": {
+      "$gt": 0
+    }
+  },
+  "fields": [
+    "ts",
+    "sensors"
+  ],
+  "sort": [
+    {
+      "ts": "desc"
+    }
+  ]
+}
