@@ -2,7 +2,17 @@ Catalog -> iot platform -> name + initials
 Overview, wait for green, create cloudant database
 Launch to get into admin console for cloudant
 disks -> new database -> raspi3monitor
+
 Design Docs -> Query Indexes { "ts": "asc" } (replaces foo) -> Create
+{
+  "index": {
+    "fields": [
+      { "ts": "asc" }
+    ]
+  },
+  "type": "json"
+}
+
 
 GetCloudant URL from connections
 
