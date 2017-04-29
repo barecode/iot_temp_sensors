@@ -14,17 +14,16 @@
  * Hour = 3600000
  * Half-hour = 1800000
  * Minute = 60000
- * Second = 6000
+ * Second = 1000
  */
-var delayinms = 1800000; // every half hour
-var suspend = false;
+var delayinms = 1000; // every half hour
+var suspend = false; // global suspend flag, set via IoT command
 
 if (!!!process.env.AUTH_TOKEN) {
   console.error("Error, environment variable AUTH_TOKEN not set")
   process.exit()
 }
 
-var fs = require('fs');
 var moment = require('moment');
 var sensor = require('ds18x20');
 var iotf = require('ibmiotf');
@@ -39,12 +38,10 @@ var deviceClient = new iotf.IotfDevice(config);
 deviceClient.log.setLevel('debug');
 deviceClient.connect();
 
-var devices = sensor.list();
-
 deviceClient.on('connect', function () {
   console.log("connected");
-  doTask();
-  setInterval(doTask, delayinms); 
+  publishSensorData();
+  setInterval(publishSensorData, delayinms); 
 });
  
 deviceClient.on('reconnect', function () {
@@ -68,30 +65,19 @@ deviceClient.on("error", function (err) {
  * Published json structure:
  * {
  *   "ts": "YYYY-MM-DDTHH:mm:ss.SSSZZ",
- *   "sensors": [
- *     { "id": "28-*", "temp": 0.0 }
- *   ]
+ *   "sensors": { '28-00000574c791': 22.9, ... }
  * }
  */
-function doTask() {
-    if (!suspend)  {
+function publishSensorData() {
+  if (!suspend)  {
+    sensor.getAll(function (err, tempObj) {
       var monval = { sensors: [] };
-
-      for (var device in devices) {
-        var data = {};
-        data.id = device.id();
-
-        var ctemp = sensor.get( device );
-        var ftemp = ((ctemp * 9) / 5) + 32;
-        data.temp = Math.round(ftemp * 10, 1) / 10;
-
-        monval.sensors.add(data);
-      }
-
       monval.ts = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ");
+      monval.sensors = tempObj;
 
       var payload = JSON.stringify(monval);
-      console.log("publishing payload:" + payload);
+      console.log("publishing payload: " + payload);
       deviceClient.publish('itemsvc', 'json', payload);
-    }
+    });
+  }
 }
