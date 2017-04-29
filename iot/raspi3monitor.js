@@ -1,11 +1,26 @@
-//var delayinms = 3600000; // every hour
+/**
+ * Not sure if I want to use unique IoT devices for each sensor
+ * (and manage their locations via the IoT portal) or if I treat
+ * the Pi as the device and the sensors are just part of the payload.
+ *
+ * Currently, this treats the Pi as the device and the sensors as
+ * part of the payload.
+ * How I map the sensors to human readable locations is TBD.
+ */
+
+/**
+ * delayinms is the delay, in milliseconds, to wait between publishes
+ * of data. Here are some common values:
+ * Hour = 3600000
+ * Half-hour = 1800000
+ * Minute = 60000
+ * Second = 6000
+ */
 var delayinms = 1800000; // every half hour
-//var delayinms = 60000; // every minute
-//var delayinms = 6000; // every second
 var suspend = false;
 
 if (!!!process.env.AUTH_TOKEN) {
-  console.log("Error, environment variable AUTH_TOKEN not set")
+  console.error("Error, environment variable AUTH_TOKEN not set")
   process.exit()
 }
 
@@ -24,7 +39,7 @@ var deviceClient = new iotf.IotfDevice(config);
 deviceClient.log.setLevel('debug');
 deviceClient.connect();
 
-var listOfDeviceIds = sensor.list();
+var devices = sensor.list();
 
 deviceClient.on('connect', function () {
   console.log("connected");
@@ -46,35 +61,36 @@ deviceClient.on("command", function (commandName, format, payload, topic) {
 });
 
 deviceClient.on("error", function (err) {
-        console.log("Error : " + err);
+  console.log("Error : " + err);
 });
 
-function fileExists(filePath)
-{
-    try
-    {
-        return fs.statSync(filePath).isFile();
-    }
-    catch (err)
-    {
-        return false;
-    }
-}
-
+/**
+ * Published json structure:
+ * {
+ *   "ts": "YYYY-MM-DDTHH:mm:ss.SSSZZ",
+ *   "sensors": [
+ *     { "id": "28-*", "temp": 0.0 }
+ *   ]
+ * }
+ */
 function doTask() {
     if (!suspend)  {
-      var ctemp = sensor.get( listOfDeviceIds[0] );
-      var ftemp = ((ctemp * 9) / 5) + 32;
-      var ftemp = Math.round(ftemp * 10, 1) / 10;
-      if (fileExists(__dirname + '/simcold')) {
-        console.log('simcold File found. Forcing temp reading of 32 degrees');
-        ftemp = 32;
-      }
-      var monval = {};
-      monval.d = { "temperature" : ftemp };
-      monval.ts = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ");
-      var payload = JSON.stringify(monval);
+      var monval = { sensors: [] };
 
+      for (var device in devices) {
+        var data = {};
+        data.id = device.id();
+
+        var ctemp = sensor.get( device );
+        var ftemp = ((ctemp * 9) / 5) + 32;
+        data.temp = Math.round(ftemp * 10, 1) / 10;
+
+        monval.sensors.add(data);
+      }
+
+      monval.ts = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZZ");
+
+      var payload = JSON.stringify(monval);
       console.log("publishing payload:" + payload);
       deviceClient.publish('itemsvc', 'json', payload);
     }
