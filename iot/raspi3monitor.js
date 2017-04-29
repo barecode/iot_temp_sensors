@@ -16,7 +16,7 @@
  * Minute = 60000
  * Second = 1000
  */
-var delayinms = 1000; // every half hour
+var delayinms = 1800000; // every half hour
 var suspend = false; // global suspend flag, set via IoT command
 
 if (!!!process.env.AUTH_TOKEN) {
