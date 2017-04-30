@@ -13,10 +13,12 @@
  * of data. Here are some common values:
  * Hour = 3600000
  * Half-hour = 1800000
+ * Fifteen Minutes = 900000
+ * Ten Minutes = 600000
  * Minute = 60000
  * Second = 1000
  */
-var delayinms = 1800000; // every half hour
+var delayinms = 900000; // every fifteen minutes
 var suspend = false; // global suspend flag, set via IoT command
 
 if (!!!process.env.AUTH_TOKEN) {
