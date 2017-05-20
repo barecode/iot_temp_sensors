@@ -42,3 +42,7 @@ Follow the AdaFruit guide:
 https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing/hardware
 
 
+
+
+# Relevant studies
+http://jacobsschool.ucsd.edu/news/news_releases/release.sfe?id=1094
